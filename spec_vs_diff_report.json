@@ -1,0 +1,145 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-11T14:27:42.806Z",
+  "summary": "The diff adds a Motoko backend actor and a React frontend with catalog browsing, product details, and create/edit/delete dialogs using React Query and Internet Identity. However, several backend requirements are either missing or implemented with different method names/types than specified, and persistent stable storage across upgrades is not evidenced. The diff also introduces extra features (user profiles, secret-token-based access-control init, footer attribution) that were not requested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Products are stored persistently across canister upgrades (using stable storage patterns).",
+      "reason": "The added backend state variables shown (`nextProductId`, `productCache`, `userProfiles`) are plain `var` values; the diff summary does not show any `stable var` declarations or preupgrade/postupgrade logic to persist data across upgrades.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Product model includes price as number + currency string.",
+      "reason": "Backend defines `Currency` as a variant (e.g., `#usd`, `#eur`, `#other : Text`) and `Price.amount` as `Float`, not a currency string field as requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Implement canister methods named listProducts (with optional query parameters), getProductById, createProduct, updateProduct, deleteProduct.",
+      "reason": "Frontend is calling `actor.filterProducts(...)` and `actor.addProduct(...)`, and mutations call `actor.updateProduct(...)` and `actor.deleteProduct(...)`. The diff does not show methods named `listProducts` or `createProduct`, and the listing method name differs (`filterProducts`).",
+      "evidence": [
+        "frontend/src/hooks/useProductQueries.ts",
+        "frontend/src/hooks/useProductMutations.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "createProduct/updateProduct/deleteProduct validate required fields (at least name, brand, category).",
+      "reason": "Frontend validates name/brand/price in `ProductFormDialog`, but the diff summary does not provide evidence of backend-side validation or error handling for missing required fields.",
+      "evidence": [
+        "frontend/src/components/ProductFormDialog.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "listProducts supports filtering and returns results deterministically (stable ordering, e.g., by name then id).",
+      "reason": "The diff shows a filtering hook and some compare helpers, but the backend implementation is truncated and does not evidence stable/deterministic ordering by name then id in the listing response.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useProductQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Only authenticated users (via Internet Identity principal) can create, update, or delete products; unauthenticated calls fail with a clear error message.",
+      "reason": "UI hides edit/delete unless authenticated, but the diff does not provide clear evidence that backend methods enforce II-based authorization and return a clear error message when anonymous. Additionally, the actor initialization includes `_initializeAccessControlWithSecret(adminToken)` suggesting a secret-token pathway not specified by the requirement.",
+      "evidence": [
+        "frontend/src/components/ProductDetailsDialog.tsx",
+        "frontend/src/hooks/useActor.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "When signed out, management actions are hidden/disabled and the UI prompts the user to sign in.",
+      "reason": "The diff shows management actions hidden based on `isAuthenticated`, but no explicit sign-in prompt/message for management actions is evidenced in the provided snippets (beyond having a Login button).",
+      "evidence": [
+        "frontend/src/components/ProductDetailsDialog.tsx",
+        "frontend/src/pages/CatalogPage.tsx",
+        "frontend/src/components/Auth/LoginButton.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+      "reason": "The UI references `/assets/generated/skincare-logo.dim_512x512.png` and `/assets/generated/skincare-hero.dim_1600x600.png`, but the diff summary does not show the actual image files added under `frontend/public/assets/generated` (and notes some added files were omitted due to limits).",
+      "evidence": [
+        "frontend/src/components/layout/AppHeader.tsx",
+        "frontend/src/pages/CatalogPage.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile feature (profile setup dialog, backend UserProfile type and storage, get/save caller profile hooks)",
+      "reason": "The BuildRequest focuses on product catalog and product management; user profiles and personalized recommendations are not requested.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/Auth/ProfileSetupDialog.tsx",
+        "frontend/src/hooks/useAuthz.ts",
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppHeader.tsx"
+      ]
+    },
+    {
+      "description": "Secret-token-based access control initialization via URL parameter (caffeineAdminToken) and backend `_initializeAccessControlWithSecret` call",
+      "reason": "Authorization requirement specifies Internet Identity principal-based auth for create/update/delete; introducing a secret admin token mechanism was not requested and may conflict with the intended auth model.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/utils/urlParams.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Footer attribution link to caffeine.ai and related UTM parameters",
+      "reason": "Not requested by the BuildRequest.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "description": "Dark mode theming via next-themes ThemeProvider",
+      "reason": "The BuildRequest asks for a warm neutral minimalist theme, but does not request system/dark mode support specifically.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/index.css"
+      ]
+    }
+  ],
+  "confidence": 0.71,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Auth/LoginButton.tsx",
+    "frontend/src/components/Auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/ProductCard.tsx",
+    "frontend/src/components/ProductDetailsDialog.tsx",
+    "frontend/src/components/ProductFormDialog.tsx",
+    "frontend/src/components/layout/AppHeader.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useAuthz.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useProductMutations.ts",
+    "frontend/src/hooks/useProductQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/productFilters.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CatalogPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

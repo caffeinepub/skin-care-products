@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Project to build an app focused on Skin Care Products.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimalist skincare app logo, line-art style, warm neutral palette (skincare-logo.dim_512x512.png)\n- Clean hero illustration featuring abstract skincare bottles and botanical elements, soft warm neutrals, lots of whitespace (skincare-hero.dim_1600x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-a-react-ui-for-browsing-skin-care-products-a-home-catalog-page-that-shows-a-product-grid-list-with-product-image-name-brand-category-skintype-and-price-plus-a-search-input-and-filter-controls-category-skin-type-concern-price-range",
+      "title": "Build a React UI for browsing skin care products: a home/catalog page that shows a product grid/list with product image, name, brand, category, skinType, and price, plus a search input and filter controls (category, skin type, concern, price range).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-product-details-view-that-opens-from-the-catalog-route-or-modal-and-displays-all-product-fields-including-description-key-ingredients-concerns-and-usage-instructions",
+      "title": "Add a product details view that opens from the catalog (route or modal) and displays all product fields, including description, key ingredients, concerns, and usage instructions.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-authenticated-management-ui-for-products-when-signed-in-provide-screens-forms-to-create-a-new-product-and-edit-delete-existing-products-including-client-side-validation-for-required-fields",
+      "title": "Add an authenticated management UI for products: when signed in, provide screens/forms to create a new product and edit/delete existing products, including client-side validation for required fields.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-use-react-query-for-product-fetching-mutations-with-proper-cache-invalidation-after-create-update-delete-so-the-catalog-and-details-stay-in-sync-without-manual-refresh",
+      "title": "Use React Query for product fetching/mutations with proper cache invalidation after create/update/delete so the catalog and details stay in sync without manual refresh.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-establish-a-coherent-visual-theme-for-the-app-colors-typography-spacing-components-suited-to-a-skin-care-catalog-clean-minimalist-warm-neutral-palette-and-apply-it-consistently-across-catalog-filters-details-and-forms-tailwind-existing-ui-components",
+      "title": "Establish a coherent visual theme for the app (colors, typography, spacing, components) suited to a skin care catalog—clean, minimalist, warm neutral palette—and apply it consistently across catalog, filters, details, and forms (Tailwind + existing UI components).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-image-assets-to-the-frontend-and-use-them-in-the-ui-stored-under-frontend-public-assets-generated-app-logo-and-a-homepage-hero-banner-illustration",
+      "title": "Add generated static image assets to the frontend and use them in the UI (stored under frontend/public/assets/generated): app logo and a homepage hero/banner illustration.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a skin care product data model and persistent storage in the Motoko backend, including fields: id, name, brand, category (e.g., cleanser/serum/moisturizer/sunscreen), skinType (e.g., oily/dry/combination/sensitive), keyIngredients (list of strings), concerns (list of strings), price (number + currency string), description, usageInstructions, and imageUrl (string).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement backend canister methods to manage products: listProducts (with optional query parameters for search text, category, skinType, concerns, minPrice, maxPrice), getProductById, createProduct, updateProduct, and deleteProduct.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add simple authorization rules: only authenticated users (via Internet Identity principal) can create, update, or delete products; anonymous users can only browse.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Skin Care Products",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

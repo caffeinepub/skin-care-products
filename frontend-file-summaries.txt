@@ -1,0 +1,16 @@
+{
+  "frontend/src/App.tsx": "Main application component that renders the header, catalog page, footer with attribution, profile setup dialog for new users, and toast notifications with theme provider.",
+  "frontend/src/pages/CatalogPage.tsx": "Catalog page displaying hero section with generated image, search/filter controls, product grid with loading/error/empty states, and dialogs for product details and creation.",
+  "frontend/src/components/ProductCard.tsx": "Reusable product card component displaying product image, name, brand, category, skin type badges, and price with hover effects.",
+  "frontend/src/components/ProductDetailsDialog.tsx": "Modal dialog showing full product details including image, price, description, ingredients, concerns, usage instructions, with edit/delete actions for authenticated users.",
+  "frontend/src/components/ProductFormDialog.tsx": "Form dialog for creating and editing products with validation, supporting all product fields including category, skin type, ingredients, concerns, and pricing.",
+  "frontend/src/components/layout/AppHeader.tsx": "Application header with logo, branding, user profile display, and login/logout button.",
+  "frontend/src/components/Auth/LoginButton.tsx": "Authentication button component handling Internet Identity login/logout with loading states and query cache clearing.",
+  "frontend/src/components/Auth/ProfileSetupDialog.tsx": "First-time user profile setup dialog collecting name, optional skin type, and skin concerns with proper loading state handling.",
+  "frontend/src/hooks/useProductQueries.ts": "React Query hooks for fetching filtered product lists and individual products by ID from the backend.",
+  "frontend/src/hooks/useProductMutations.ts": "React Query mutations for creating, updating, and deleting products with automatic cache invalidation.",
+  "frontend/src/hooks/useAuthz.ts": "React Query hooks for fetching and saving user profiles with proper actor dependency handling to prevent modal flash.",
+  "frontend/src/index.css": "Global styles with warm neutral OKLCH color palette for light and dark modes, avoiding blue/purple tones.",
+  "frontend/tailwind.config.js": "Tailwind configuration with Inter font family, warm neutral color tokens, custom shadows, and extended design system.",
+  "frontend/src/lib/productFilters.ts": "Helper utilities for formatting product categories, skin types, currencies, and parsing comma-separated concerns and ingredients."
+}

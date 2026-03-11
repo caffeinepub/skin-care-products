@@ -1,0 +1,138 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-react-ui-for-browsing-skin-care-products-a-home-catalog-page-that-shows-a-product-grid-list-with-product-image-name-brand-category-skintype-and-price-plus-a-search-input-and-filter-controls-category-skin-type-concern-price-range",
+      "featureTitle": "Build a React UI for browsing skin care products: a home/catalog page that shows a product grid/list with product image, name, brand, category, skinType, and price, plus a search input and filter controls (category, skin type, concern, price range).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProductCard.tsx",
+        "frontend/src/hooks/useProductQueries.ts",
+        "frontend/src/lib/productFilters.ts",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-product-details-view-that-opens-from-the-catalog-route-or-modal-and-displays-all-product-fields-including-description-key-ingredients-concerns-and-usage-instructions",
+      "featureTitle": "Add a product details view that opens from the catalog (route or modal) and displays all product fields, including description, key ingredients, concerns, and usage instructions.",
+      "files": [
+        "frontend/src/components/ProductDetailsDialog.tsx",
+        "frontend/src/hooks/useProductQueries.ts",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-authenticated-management-ui-for-products-when-signed-in-provide-screens-forms-to-create-a-new-product-and-edit-delete-existing-products-including-client-side-validation-for-required-fields",
+      "featureTitle": "Add an authenticated management UI for products: when signed in, provide screens/forms to create a new product and edit/delete existing products, including client-side validation for required fields.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Auth/LoginButton.tsx",
+        "frontend/src/components/Auth/ProfileSetupDialog.tsx",
+        "frontend/src/components/ProductFormDialog.tsx",
+        "frontend/src/components/layout/AppHeader.tsx",
+        "frontend/src/hooks/useAuthz.ts",
+        "frontend/src/hooks/useProductMutations.ts",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-use-react-query-for-product-fetching-mutations-with-proper-cache-invalidation-after-create-update-delete-so-the-catalog-and-details-stay-in-sync-without-manual-refresh",
+      "featureTitle": "Use React Query for product fetching/mutations with proper cache invalidation after create/update/delete so the catalog and details stay in sync without manual refresh.",
+      "files": [
+        "frontend/src/components/ProductDetailsDialog.tsx",
+        "frontend/src/hooks/useProductMutations.ts",
+        "frontend/src/hooks/useProductQueries.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-establish-a-coherent-visual-theme-for-the-app-colors-typography-spacing-components-suited-to-a-skin-care-catalog-clean-minimalist-warm-neutral-palette-and-apply-it-consistently-across-catalog-filters-details-and-forms-tailwind-existing-ui-components",
+      "featureTitle": "Establish a coherent visual theme for the app (colors, typography, spacing, components) suited to a skin care catalog—clean, minimalist, warm neutral palette—and apply it consistently across catalog, filters, details, and forms (Tailwind + existing UI components).",
+      "files": [
+        "frontend/src/components/layout/AppHeader.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/CatalogPage.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-image-assets-to-the-frontend-and-use-them-in-the-ui-stored-under-frontend-public-assets-generated-app-logo-and-a-homepage-hero-banner-illustration",
+      "featureTitle": "Add generated static image assets to the frontend and use them in the UI (stored under frontend/public/assets/generated): app logo and a homepage hero/banner illustration.",
+      "files": [
+        "frontend/src/components/layout/AppHeader.tsx",
+        "frontend/src/pages/CatalogPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

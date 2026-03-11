@@ -1,0 +1,210 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Skin Care Products catalog (frontend browsing, details, authenticated management)",
+  "requirements": [
+    {
+      "id": "REQ-4",
+      "summary": "Build a catalog page with product grid plus search and filters wired to backend product listing.",
+      "acceptanceCriteria": [
+        "Catalog page loads products from the backend and renders a list/grid.",
+        "Search and filters update the displayed results (client-side or server-side) without full page reload.",
+        "Empty states are shown when no products match (English text).",
+        "Loading and error states are handled (English text)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CatalogPage.tsx",
+          "operation": "create",
+          "description": "Create the main catalog page UI: hero area, search input, filter controls (category, skin type, concern, price range), and a responsive product grid/list rendering image, name, brand, category, skinType, and price. Use existing shadcn-ui components (e.g., Input, Select, Card, Button) to compose the UI; do not modify anything under frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProductCard.tsx",
+          "operation": "create",
+          "description": "Add a reusable ProductCard component for catalog rendering, including product image, name, brand, category, skin type, and price, with click handling to open details. Compose with shadcn-ui primitives (Card/Button/etc.) without modifying frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useProductQueries.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for catalog fetching (list/filter) that accept the current search/filter state and call the backend product filtering capability. Ensure loading/error/empty state support via returned query state."
+        },
+        {
+          "path": "frontend/src/lib/productFilters.ts",
+          "operation": "create",
+          "description": "Add small helpers to normalize/serialize filter UI state into backend filter arguments (including concerns string, min/max price parsing) and to format enums for display in English."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the CatalogPage into the app as the primary view (or ensure it is the main rendered view), and pass down any required layout/header props so the catalog is reachable without additional navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add a product details view that opens from the catalog and displays all product fields.",
+      "acceptanceCriteria": [
+        "Clicking a product navigates to or opens a details view.",
+        "Details view fetches the product by id and shows a loading state while fetching.",
+        "If the product id is invalid/missing, show a clear 'Product not found' message (English)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ProductDetailsDialog.tsx",
+          "operation": "create",
+          "description": "Implement a modal details view (dialog) that opens from the catalog, fetches a product by id, and displays all fields (including description, key ingredients, concerns, usage instructions). Use existing shadcn-ui dialog-related components (Dialog, DialogContent, etc.) by composition only; do not modify frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useProductQueries.ts",
+          "operation": "modify",
+          "description": "Add a React Query hook for fetching a single product by id and expose loading/error/not-found states suitable for the details view."
+        },
+        {
+          "path": "frontend/src/pages/CatalogPage.tsx",
+          "operation": "modify",
+          "description": "Wire ProductDetailsDialog opening/closing from ProductCard clicks, including passing the selected product id and handling invalid/missing id with an English 'Product not found' message."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add authenticated product management UI (create/edit/delete) with client-side validation and signed-out prompts.",
+      "acceptanceCriteria": [
+        "When signed out, management actions are hidden or disabled and the UI prompts the user to sign in.",
+        "When signed in, user can create a product via a form and see it appear in the catalog.",
+        "When signed in, user can edit and delete a product and see changes reflected after success.",
+        "Form validation messages are in English and prevent submission when required fields are missing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a LoginButton using the selected authorization component’s frontend guidance (Internet Identity login/logout + clearing React Query cache on logout). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useAuthz.ts",
+          "operation": "create",
+          "description": "Add React Query hooks to read current authentication/authorization-related state needed by the UI (e.g., current user role and current user profile presence) using the backend actor. Handle authorization failures gracefully with English messages. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/Auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Implement a first-login profile setup dialog (ask for name; optional skin type/concerns) that calls getCallerUserProfile/saveCallerUserProfile as described by the selected authorization component. Avoid modal flash by following the component guidance (actor dependency-aware loading state). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProductFormDialog.tsx",
+          "operation": "create",
+          "description": "Create a create/edit product form in a dialog with client-side validation (at least name, brand, category required; English validation messages). Include fields for category, skinType, keyIngredients, concerns, price amount + currency, description, usageInstructions, imageUrl. Compose with shadcn-ui form inputs/selects/buttons; do not modify frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useProductMutations.ts",
+          "operation": "create",
+          "description": "Add React Query mutations for create/update/delete product actions, including surfacing backend authorization errors as English UI messages (e.g., prompting sign-in when unauthorized)."
+        },
+        {
+          "path": "frontend/src/pages/CatalogPage.tsx",
+          "operation": "modify",
+          "description": "Add management affordances within the catalog UI: when signed in, show buttons to create product and edit/delete on each product (or via details dialog). When signed out, hide/disable these actions and show an English prompt to sign in. Wire dialogs for create/edit and confirm delete."
+        },
+        {
+          "path": "frontend/src/components/layout/AppHeader.tsx",
+          "operation": "create",
+          "description": "Add a header component with app branding and authentication controls (logo + LoginButton + user name if profile exists). Compose with shadcn-ui components where appropriate; do not modify frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire AppHeader globally and ensure ProfileSetupDialog can be shown after successful login (only for authenticated users lacking a saved profile), while keeping browsing accessible to anonymous users (do not block catalog browsing behind login). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Use React Query for product queries and mutations with proper cache invalidation to keep catalog and details in sync.",
+      "acceptanceCriteria": [
+        "Product list query refetches or updates after create/update/delete.",
+        "Product details query updates after an edit.",
+        "No stale UI remains after successful mutations."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useProductQueries.ts",
+          "operation": "modify",
+          "description": "Standardize React Query keys for product list and product-by-id queries so they can be invalidated/refetched deterministically after mutations."
+        },
+        {
+          "path": "frontend/src/hooks/useProductMutations.ts",
+          "operation": "modify",
+          "description": "Implement cache invalidation/update strategy after create/update/delete (invalidate product list queries; invalidate/update the specific product-by-id query) so catalog and details stay consistent without manual refresh."
+        },
+        {
+          "path": "frontend/src/components/ProductDetailsDialog.tsx",
+          "operation": "modify",
+          "description": "Ensure the details view uses the product-by-id query key and correctly reflects post-edit updates (refetch or updated cache) without requiring a manual reload."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Apply a clean, minimalist warm-neutral theme with consistent typography/spacing and accessible focus/contrast across the app.",
+      "acceptanceCriteria": [
+        "Pages share consistent typography, spacing, and component styling.",
+        "Theme avoids blue/purple as primary brand colors.",
+        "UI is readable and accessible (sufficient contrast, clear focus states)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Define global Tailwind/shadcn CSS variables for a warm neutral palette (avoid blue/purple as primary), plus baseline typography, spacing conventions, and visible focus styles. Ensure all user-facing text remains English."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extensions only as needed to support the warm-neutral design tokens (e.g., container/typography defaults) while relying primarily on CSS variables for shadcn compatibility."
+        },
+        {
+          "path": "frontend/src/components/layout/AppHeader.tsx",
+          "operation": "modify",
+          "description": "Apply consistent layout, spacing, and accessible focus states in the header using Tailwind utility classes aligned with the warm-neutral theme."
+        },
+        {
+          "path": "frontend/src/pages/CatalogPage.tsx",
+          "operation": "modify",
+          "description": "Apply consistent spacing/typography and accessible control styling for search, filters, grid, empty/loading/error states using Tailwind utilities and existing UI components (composed, not modified). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add generated static logo and hero image assets and display them in the header and catalog hero area.",
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+        "Home page displays the hero image and the app header/navbar displays the logo.",
+        "Images are loaded as static assets from the frontend (not served via backend)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/skincare-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo asset at the exact path frontend/public/assets/generated/skincare-logo.dim_512x512.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/skincare-hero.dim_1600x600.png",
+          "operation": "create",
+          "description": "Add the generated hero asset at the exact path frontend/public/assets/generated/skincare-hero.dim_1600x600.png."
+        },
+        {
+          "path": "frontend/src/components/layout/AppHeader.tsx",
+          "operation": "modify",
+          "description": "Render the static logo image from frontend/public/assets/generated/skincare-logo.dim_512x512.png in the header/nav alongside the app name."
+        },
+        {
+          "path": "frontend/src/pages/CatalogPage.tsx",
+          "operation": "modify",
+          "description": "Render the static hero/banner image from frontend/public/assets/generated/skincare-hero.dim_1600x600.png in the catalog page hero section (no new top-level routes), ensuring good responsive behavior and accessible alt text in English."
+        }
+      ]
+    }
+  ]
+}
